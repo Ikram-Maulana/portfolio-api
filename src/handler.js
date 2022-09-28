@@ -81,8 +81,32 @@ const editExperienceByIdHandler = (request, h) => {
   return response;
 };
 
+const deleteExperienceByIdHandler = (request, h) => {
+  const { id } = request.params;
+
+  const index = experiences.findIndex((experience) => experience.id === id);
+
+  if (index !== -1) {
+    experiences.splice(index, 1);
+    const response = h.response({
+      status: "success",
+      message: "Experience berhasil dihapus",
+    });
+    response.code(200);
+    return response;
+  }
+
+  const response = h.response({
+    status: "fail",
+    message: "Experience gagal dihapus. Id tidak ditemukan",
+  });
+  response.code(404);
+  return response;
+};
+
 module.exports = {
   addExperienceHandler,
   getAllExperiencesHandler,
   editExperienceByIdHandler,
+  deleteExperienceByIdHandler,
 };

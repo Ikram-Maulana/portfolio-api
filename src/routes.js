@@ -2,6 +2,7 @@ const {
   addExperienceHandler,
   getAllExperiencesHandler,
   editExperienceByIdHandler,
+  deleteExperienceByIdHandler,
 } = require("./handler");
 
 const routes = [
@@ -30,6 +31,11 @@ const routes = [
     method: "PUT",
     path: "/experiences/{id}",
     handler: editExperienceByIdHandler,
+  },
+  {
+    method: "DELETE",
+    path: "/experiences/{id}",
+    handler: deleteExperienceByIdHandler,
   },
   {
     method: "*",
