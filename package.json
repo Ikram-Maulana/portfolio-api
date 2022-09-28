@@ -1,0 +1,14 @@
+{
+  "name": "portfolio-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": "https://github.com/Ikram-Maulana/portfolio-api.git",
+  "author": "ikram-maulana <ikram075@ummi.ac.id>",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/hapi": "^20.2.2"
+  }
+}
