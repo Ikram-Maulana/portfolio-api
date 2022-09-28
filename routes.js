@@ -20,6 +20,13 @@ const routes = [
       return "Experiences";
     },
   },
+  {
+    method: "*",
+    path: "/{any*}",
+    handler: (request, h) => {
+      return "Halaman tidak ditemukan";
+    },
+  },
 ];
 
 module.exports = routes;
