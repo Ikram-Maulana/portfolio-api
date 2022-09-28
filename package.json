@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "lint": "eslint ./"
+    "start": "nodemon ./src/server.js",
+    "lint": "eslint ./src"
   },
   "repository": "https://github.com/Ikram-Maulana/portfolio-api.git",
   "author": "ikram-maulana <ikram075@ummi.ac.id>",
