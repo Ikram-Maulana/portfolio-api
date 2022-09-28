@@ -48,7 +48,41 @@ const getAllExperiencesHandler = () => ({
   },
 });
 
+const editExperienceByIdHandler = (request, h) => {
+  const { id } = request.params;
+
+  const { period, position, description } = request.payload;
+  const updatedAt = new Date().toISOString();
+
+  const index = experiences.findIndex((experience) => experience.id === id);
+
+  if (index !== -1) {
+    experiences[index] = {
+      ...experiences[index],
+      period,
+      position,
+      description,
+      updatedAt,
+    };
+
+    const response = h.response({
+      status: "success",
+      message: "Experience berhasil diperbarui",
+    });
+    response.code(200);
+    return response;
+  }
+
+  const response = h.response({
+    status: "fail",
+    message: "Gagal memperbarui experience. Id tidak ditemukan",
+  });
+  response.code(404);
+  return response;
+};
+
 module.exports = {
   addExperienceHandler,
   getAllExperiencesHandler,
+  editExperienceByIdHandler,
 };

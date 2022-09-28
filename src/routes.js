@@ -1,4 +1,8 @@
-const { addExperienceHandler, getAllExperiencesHandler } = require("./handler");
+const {
+  addExperienceHandler,
+  getAllExperiencesHandler,
+  editExperienceByIdHandler,
+} = require("./handler");
 
 const routes = [
   {
@@ -21,6 +25,11 @@ const routes = [
     method: "GET",
     path: "/experiences",
     handler: getAllExperiencesHandler,
+  },
+  {
+    method: "PUT",
+    path: "/experiences/{id}",
+    handler: editExperienceByIdHandler,
   },
   {
     method: "*",
