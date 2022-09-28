@@ -1,5 +1,5 @@
 const { nanoid } = require("nanoid");
-const experiences = require("./experiences");
+const experiences = require("../../experiences");
 
 const addExperienceHandler = (request, h) => {
   const { period, position, description } = request.payload;
