@@ -1,3 +1,5 @@
+const { addExperienceHandler } = require("./handler");
+
 const routes = [
   {
     method: "GET",
@@ -14,6 +16,11 @@ const routes = [
     method: "GET",
     path: "/experiences",
     handler: (request, h) => "Experiences",
+  },
+  {
+    method: "POST",
+    path: "/experiences",
+    handler: addExperienceHandler,
   },
   {
     method: "*",
