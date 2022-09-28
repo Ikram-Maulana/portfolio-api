@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "lint": "eslint ./"
   },
   "repository": "https://github.com/Ikram-Maulana/portfolio-api.git",
   "author": "ikram-maulana <ikram075@ummi.ac.id>",
@@ -12,6 +13,10 @@
     "@hapi/hapi": "^20.2.2"
   },
   "devDependencies": {
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.2",
     "nodemon": "^2.0.20"
   }
 }

@@ -2,30 +2,23 @@ const routes = [
   {
     method: "GET",
     path: "/",
-    handler: (request, h) => {
-      return "Hello, this is an API for Ikram Maulana's portfolio website";
-    },
+    handler: (request, h) =>
+      "Hello, this is an API for Ikram Maulana's portfolio website",
   },
   {
     method: "GET",
     path: "/projects",
-    handler: (request, h) => {
-      return "Projects";
-    },
+    handler: (request, h) => "Projects",
   },
   {
     method: "GET",
     path: "/experiences",
-    handler: (request, h) => {
-      return "Experiences";
-    },
+    handler: (request, h) => "Experiences",
   },
   {
     method: "*",
     path: "/{any*}",
-    handler: (request, h) => {
-      return "Halaman tidak ditemukan";
-    },
+    handler: (request, h) => "Halaman tidak ditemukan",
   },
 ];
 
