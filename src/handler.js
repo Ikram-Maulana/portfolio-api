@@ -41,6 +41,14 @@ const addExperienceHandler = (request, h) => {
   return response;
 };
 
+const getAllExperiencesHandler = () => ({
+  status: "success",
+  data: {
+    experiences,
+  },
+});
+
 module.exports = {
   addExperienceHandler,
+  getAllExperiencesHandler,
 };
