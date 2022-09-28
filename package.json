@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "repository": "https://github.com/Ikram-Maulana/portfolio-api.git",
   "author": "ikram-maulana <ikram075@ummi.ac.id>",
   "license": "MIT",
   "dependencies": {
     "@hapi/hapi": "^20.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
