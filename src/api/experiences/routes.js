@@ -1,46 +1,23 @@
-const {
-  addExperienceHandler,
-  getAllExperiencesHandler,
-  editExperienceByIdHandler,
-  deleteExperienceByIdHandler,
-} = require("./handler");
-
-const routes = [
-  {
-    method: "GET",
-    path: "/",
-    handler: (request, h) =>
-      "Hello, this is an API for Ikram Maulana's portfolio website",
-  },
-  {
-    method: "GET",
-    path: "/projects",
-    handler: (request, h) => "Projects",
-  },
+const routes = (handler) => [
   {
     method: "POST",
     path: "/experiences",
-    handler: addExperienceHandler,
+    handler: handler.postExperienceHandler,
   },
   {
     method: "GET",
     path: "/experiences",
-    handler: getAllExperiencesHandler,
+    handler: handler.getExperiencesHandler,
   },
   {
     method: "PUT",
     path: "/experiences/{id}",
-    handler: editExperienceByIdHandler,
+    handler: handler.putExperienceByIdHandler,
   },
   {
     method: "DELETE",
     path: "/experiences/{id}",
-    handler: deleteExperienceByIdHandler,
-  },
-  {
-    method: "*",
-    path: "/{any*}",
-    handler: (request, h) => "Halaman tidak ditemukan",
+    handler: handler.deleteExperienceByIdHandler,
   },
 ];
 

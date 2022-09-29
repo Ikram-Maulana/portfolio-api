@@ -1,7 +1,7 @@
 const { nanoid } = require("nanoid");
 const experiences = require("../../experiences");
 
-const addExperienceHandler = (request, h) => {
+const postExperienceHandler = (request, h) => {
   const { period, position, description } = request.payload;
 
   const id = nanoid(16);
@@ -41,14 +41,14 @@ const addExperienceHandler = (request, h) => {
   return response;
 };
 
-const getAllExperiencesHandler = () => ({
+const getExperiencesHandler = () => ({
   status: "success",
   data: {
     experiences,
   },
 });
 
-const editExperienceByIdHandler = (request, h) => {
+const putExperienceByIdHandler = (request, h) => {
   const { id } = request.params;
 
   const { period, position, description } = request.payload;
