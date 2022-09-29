@@ -1,6 +1,7 @@
 const { nanoid } = require("nanoid");
 const { Pool } = require("pg");
 const InvariantError = require("../../exceptions/InvariantError");
+const NotFoundError = require("../../exceptions/NotFoundError");
 const { mapProjectsDBToModel } = require("../../utils");
 
 class ProjectsService {
@@ -39,6 +40,34 @@ class ProjectsService {
   async getProjects() {
     const result = await this._pool.query("SELECT * FROM projects");
     return result.rows.map(mapProjectsDBToModel);
+  }
+
+  async editProjectById(id, { name, imageLink, tech, githubLink, demoLink }) {
+    const updatedAt = new Date().toISOString();
+
+    const query = {
+      text: "UPDATE projects SET name = $1, image_link = $2, tech = $3, github_link = $4, demo_link = $5, updated_at = $6 WHERE id = $7 RETURNING id",
+      values: [name, imageLink, tech, githubLink, demoLink, updatedAt, id],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError("Gagal memperbarui project. Id tidak ditemukan");
+    }
+  }
+
+  async deleteProjectById(id) {
+    const query = {
+      text: "DELETE FROM projects WHERE id = $1 RETURNING id",
+      values: [id],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError("Project gagal dihapus. Id tidak ditemukan");
+    }
   }
 }
 
