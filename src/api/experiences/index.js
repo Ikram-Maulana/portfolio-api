@@ -1,11 +1,11 @@
-const routes = require("./routes");
 const ExperiencesHandler = require("./handler");
+const routes = require("./routes");
 
-module.export = {
+module.exports = {
   name: "experiences",
   version: "1.0.0",
-  register: async (server, { service, validator }) => {
-    const experiencesHandler = new ExperiencesHandler(service, validator);
-    server.route(routes(experiencesHandler));
+  register: async (server, { experiencesService, validator }) => {
+    const handler = new ExperiencesHandler(experiencesService, validator);
+    server.route(routes(handler));
   },
 };

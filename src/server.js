@@ -16,10 +16,18 @@ const init = async () => {
     },
   });
 
+  server.route({
+    method: "GET",
+    path: "/",
+    handler: () =>
+      "Hello, this is an API for Ikram Maulana's portfolio website",
+  });
+
+  // Register internal plugin
   await server.register({
     plugin: experiences,
     options: {
-      service: experiencesService,
+      experiencesService,
       validator: ExperiencesValidator,
     },
   });

@@ -5,11 +5,11 @@ class ExperiencesHandler {
     this._service = service;
     this._validator = validator;
 
-    this.postExperiencesHandler = this.postExperiencesHandler.bind(this);
+    this.postExperienceHandler = this.postExperienceHandler.bind(this);
     this.getExperiencesHandler = this.getExperiencesHandler.bind(this);
-    this.putExperiencesByIdHandler = this.putExperiencesByIdHandler.bind(this);
-    this.deleteExperiencesByIdHandler =
-      this.deleteExperiencesByIdHandler.bind(this);
+    this.putExperienceByIdHandler = this.putExperienceByIdHandler.bind(this);
+    this.deleteExperienceByIdHandler =
+      this.deleteExperienceByIdHandler.bind(this);
   }
 
   postExperienceHandler(request, h) {
