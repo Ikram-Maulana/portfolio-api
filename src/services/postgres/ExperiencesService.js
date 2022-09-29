@@ -30,8 +30,6 @@ class ExperiencesService {
 
   async getExperiences() {
     const result = await this._pool.query("SELECT * FROM experiences");
-
-    // map
     return result.rows.map(mapExperiencesDBToModel);
   }
 
