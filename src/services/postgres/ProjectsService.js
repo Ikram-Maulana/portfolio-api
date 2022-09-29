@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const { nanoid } = require("nanoid");
 const { Pool } = require("pg");
 const InvariantError = require("../../exceptions/InvariantError");
@@ -9,20 +10,20 @@ class ProjectsService {
     this._pool = new Pool();
   }
 
-  async addProject({ name, imageLink, tech, githubLink, demoLink }) {
+  async addProject({ name, image_link, tech, github_link, demo_link }) {
     const id = nanoid(16);
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
 
     const query = {
-      text: "INSERT INTO projects VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id",
+      text: "INSERT INTO projects VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
       values: [
         id,
         name,
-        imageLink,
+        image_link,
         tech,
-        githubLink,
-        demoLink,
+        github_link,
+        demo_link,
         createdAt,
         updatedAt,
       ],
@@ -42,12 +43,15 @@ class ProjectsService {
     return result.rows.map(mapProjectsDBToModel);
   }
 
-  async editProjectById(id, { name, imageLink, tech, githubLink, demoLink }) {
+  async editProjectById(
+    id,
+    { name, image_link, tech, github_link, demo_link }
+  ) {
     const updatedAt = new Date().toISOString();
 
     const query = {
       text: "UPDATE projects SET name = $1, image_link = $2, tech = $3, github_link = $4, demo_link = $5, updated_at = $6 WHERE id = $7 RETURNING id",
-      values: [name, imageLink, tech, githubLink, demoLink, updatedAt, id],
+      values: [name, image_link, tech, github_link, demo_link, updatedAt, id],
     };
 
     const result = await this._pool.query(query);

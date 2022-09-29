@@ -9,8 +9,14 @@ const experiences = require("./api/experiences");
 const ExperiencesService = require("./services/postgres/ExperiencesService");
 const ExperiencesValidator = require("./validator/experiences");
 
+// Projects
+const projects = require("./api/projects");
+const ProjectsService = require("./services/postgres/ProjectsService");
+const ProjectsValidator = require("./validator/projects");
+
 const init = async () => {
   const experiencesService = new ExperiencesService();
+  const projectsService = new ProjectsService();
 
   const server = Hapi.server({
     port: process.env.PORT,
@@ -30,13 +36,22 @@ const init = async () => {
   });
 
   // Register internal plugin
-  await server.register({
-    plugin: experiences,
-    options: {
-      experiencesService,
-      validator: ExperiencesValidator,
+  await server.register([
+    {
+      plugin: experiences,
+      options: {
+        experiencesService,
+        validator: ExperiencesValidator,
+      },
     },
-  });
+    {
+      plugin: projects,
+      options: {
+        projectsService,
+        validator: ProjectsValidator,
+      },
+    },
+  ]);
 
   // PreRespond
   server.ext("onPreResponse", (request, h) => {
