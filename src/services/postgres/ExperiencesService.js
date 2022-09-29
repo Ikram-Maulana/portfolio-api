@@ -1,6 +1,7 @@
 const { nanoid } = require("nanoid");
 const { Pool } = require("pg");
 const InvariantError = require("../../exceptions/InvariantError");
+const { mapExperienceDBToModel } = require("../../utils");
 
 class ExperiencesService {
   constructor() {
@@ -24,5 +25,10 @@ class ExperiencesService {
     }
 
     return result.rows[0].id;
+  }
+
+  async getExperiences() {
+    const result = await this._pool.query("SELECT * FROM experiences");
+    return result.rows.map(mapExperienceDBToModel);
   }
 }
