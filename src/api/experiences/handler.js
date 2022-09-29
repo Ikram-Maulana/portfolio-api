@@ -1,55 +1,32 @@
-const ClientError = require("../../exceptions/ClientError");
+const autoBind = require("auto-bind");
 
 class ExperiencesHandler {
   constructor(service, validator) {
     this._service = service;
     this._validator = validator;
 
-    this.postExperienceHandler = this.postExperienceHandler.bind(this);
-    this.getExperiencesHandler = this.getExperiencesHandler.bind(this);
-    this.putExperienceByIdHandler = this.putExperienceByIdHandler.bind(this);
-    this.deleteExperienceByIdHandler =
-      this.deleteExperienceByIdHandler.bind(this);
+    autoBind(this); // mem-bind nilai this untuk seluruh method sekaligus
   }
 
   async postExperienceHandler(request, h) {
-    try {
-      this._validator.validateExperiencePayload(request.payload);
-      const { period, position, description } = request.payload;
+    this._validator.validateExperiencePayload(request.payload);
+    const { period, position, description } = request.payload;
 
-      const experienceId = await this._service.addExperience({
-        period,
-        position,
-        description,
-      });
+    const experienceId = await this._service.addExperience({
+      period,
+      position,
+      description,
+    });
 
-      const response = h.response({
-        status: "success",
-        message: "Experience berhasil ditambahkan",
-        data: {
-          experienceId,
-        },
-      });
-      response.code(201);
-      return response;
-    } catch (error) {
-      if (error instanceof ClientError) {
-        const response = h.response({
-          status: "fail",
-          message: error.message,
-        });
-        response.code(error.statusCode);
-        return response;
-      }
-
-      // Server ERROR!
-      const response = h.response({
-        status: "error",
-        message: "Maaf, terjadi kegagalan pada server kami.",
-      });
-      response.code(500);
-      return response;
-    }
+    const response = h.response({
+      status: "success",
+      message: "Experience berhasil ditambahkan",
+      data: {
+        experienceId,
+      },
+    });
+    response.code(201);
+    return response;
   }
 
   async getExperiencesHandler() {
@@ -63,63 +40,25 @@ class ExperiencesHandler {
   }
 
   async putExperienceByIdHandler(request, h) {
-    try {
-      this._validator.validateExperiencePayload(request.payload);
-      const { id } = request.params;
+    this._validator.validateExperiencePayload(request.payload);
+    const { id } = request.params;
 
-      await this._service.editExperienceById(id, request.payload);
+    await this._service.editExperienceById(id, request.payload);
 
-      return {
-        status: "success",
-        message: "Experience berhasil diperbarui",
-      };
-    } catch (error) {
-      if (error instanceof ClientError) {
-        const response = h.response({
-          status: "fail",
-          message: error.message,
-        });
-        response.code(error.statusCode);
-        return response;
-      }
-
-      // Server ERROR!
-      const response = h.response({
-        status: "error",
-        message: "Maaf, terjadi kegagalan pada server kami.",
-      });
-      response.code(500);
-      return response;
-    }
+    return {
+      status: "success",
+      message: "Experience berhasil diperbarui",
+    };
   }
 
   async deleteExperienceByIdHandler(request, h) {
-    try {
-      const { id } = request.params;
-      await this._service.deleteExperienceById(id);
+    const { id } = request.params;
+    await this._service.deleteExperienceById(id);
 
-      return {
-        status: "success",
-        message: "Experience berhasil dihapus",
-      };
-    } catch (error) {
-      if (error instanceof ClientError) {
-        const response = h.response({
-          status: "fail",
-          message: error.message,
-        });
-        response.code(error.statusCode);
-        return response;
-      }
-
-      // Server ERROR!
-      const response = h.response({
-        status: "error",
-        message: "Maaf, terjadi kegagalan pada server kami.",
-      });
-      response.code(500);
-      return response;
-    }
+    return {
+      status: "success",
+      message: "Experience berhasil dihapus",
+    };
   }
 }
 
