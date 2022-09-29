@@ -5,7 +5,7 @@ const Hapi = require("@hapi/hapi");
 
 // Experiences
 const experiences = require("./api/experiences");
-const ExperiencesService = require("./services/inMemory/ExperiencesService");
+const ExperiencesService = require("./services/postgres/ExperiencesService");
 const ExperiencesValidator = require("./validator/experiences");
 
 const init = async () => {

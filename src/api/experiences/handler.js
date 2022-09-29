@@ -12,12 +12,12 @@ class ExperiencesHandler {
       this.deleteExperienceByIdHandler.bind(this);
   }
 
-  postExperienceHandler(request, h) {
+  async postExperienceHandler(request, h) {
     try {
       this._validator.validateExperiencePayload(request.payload);
       const { period, position, description } = request.payload;
 
-      const experienceId = this._service.addExperience({
+      const experienceId = await this._service.addExperience({
         period,
         position,
         description,
@@ -52,8 +52,8 @@ class ExperiencesHandler {
     }
   }
 
-  getExperiencesHandler() {
-    const experiences = this._service.getExperiences();
+  async getExperiencesHandler() {
+    const experiences = await this._service.getExperiences();
     return {
       status: "success",
       data: {
@@ -62,12 +62,12 @@ class ExperiencesHandler {
     };
   }
 
-  putExperienceByIdHandler(request, h) {
+  async putExperienceByIdHandler(request, h) {
     try {
       this._validator.validateExperiencePayload(request.payload);
       const { id } = request.params;
 
-      this._service.editExperienceById(id, request.payload);
+      await this._service.editExperienceById(id, request.payload);
 
       return {
         status: "success",
@@ -93,10 +93,10 @@ class ExperiencesHandler {
     }
   }
 
-  deleteExperienceByIdHandler(request, h) {
+  async deleteExperienceByIdHandler(request, h) {
     try {
       const { id } = request.params;
-      this._service.deleteExperienceById(id);
+      await this._service.deleteExperienceById(id);
 
       return {
         status: "success",
