@@ -1,6 +1,7 @@
 const Hapi = require("@hapi/hapi");
 const experiences = require("./api/experiences");
 const ExperiencesService = require("./services/inMemory/ExperiencesService");
+const ExperiencesValidator = require("./validator/experiences");
 
 const init = async () => {
   const experiencesService = new ExperiencesService();
@@ -19,6 +20,7 @@ const init = async () => {
     plugin: experiences,
     options: {
       service: experiencesService,
+      validator: ExperiencesValidator,
     },
   });
 

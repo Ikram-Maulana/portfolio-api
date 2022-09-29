@@ -1,6 +1,8 @@
 class ExperiencesHandler {
-  constructor(service) {
+  constructor(service, validator) {
     this._service = service;
+    this._validator = validator;
+
     this.postExperiencesHandler = this.postExperiencesHandler.bind(this);
     this.getExperiencesHandler = this.getExperiencesHandler.bind(this);
     this.putExperiencesByIdHandler = this.putExperiencesByIdHandler.bind(this);
@@ -10,6 +12,7 @@ class ExperiencesHandler {
 
   postExperienceHandler(request, h) {
     try {
+      this._validator.validateExperiencePayload(request.payload);
       const { period, position, description } = request.payload;
 
       const experienceId = this._service.addExperience({
@@ -49,7 +52,9 @@ class ExperiencesHandler {
 
   putExperienceByIdHandler(request, h) {
     try {
+      this._validator.validateExperiencePayload(request.payload);
       const { id } = request.params;
+
       this._service.editExperienceById(id, request.payload);
 
       return {
