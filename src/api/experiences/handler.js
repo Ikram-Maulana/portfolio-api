@@ -1,112 +1,89 @@
-const { nanoid } = require("nanoid");
-const experiences = require("../../experiences");
+class ExperiencesHandler {
+  constructor(service) {
+    this._service = service;
+    this.postExperiencesHandler = this.postExperiencesHandler.bind(this);
+    this.getExperiencesHandler = this.getExperiencesHandler.bind(this);
+    this.putExperiencesByIdHandler = this.putExperiencesByIdHandler.bind(this);
+    this.deleteExperiencesByIdHandler =
+      this.deleteExperiencesByIdHandler.bind(this);
+  }
 
-const postExperienceHandler = (request, h) => {
-  const { period, position, description } = request.payload;
+  postExperienceHandler(request, h) {
+    try {
+      const { period, position, description } = request.payload;
 
-  const id = nanoid(16);
-  const createdAt = new Date().toISOString();
-  const updatedAt = createdAt;
+      const experienceId = this._service.addExperience({
+        period,
+        position,
+        description,
+      });
 
-  const newExperience = {
-    id,
-    period,
-    position,
-    description,
-    createdAt,
-    updatedAt,
-  };
+      const response = h.response({
+        status: "success",
+        message: "Experience berhasil ditambahkan",
+        data: {
+          experienceId,
+        },
+      });
+      response.code(201);
+      return response;
+    } catch (error) {
+      const response = h.response({
+        status: "fail",
+        message: error.message,
+      });
+      response.code(400);
+      return response;
+    }
+  }
 
-  experiences.push(newExperience);
-
-  const isSuccess = experiences.filter((experience) => experience.id === id);
-
-  if (isSuccess) {
-    const response = h.response({
+  getExperiencesHandler() {
+    const experiences = this._service.getExperiences();
+    return {
       status: "success",
-      message: "Experience berhasil ditambahkan",
       data: {
-        experienceId: id,
+        experiences,
       },
-    });
-    response.code(201);
-    return response;
-  }
-
-  const response = h.response({
-    status: "fail",
-    message: "Experience gagal ditambahkan",
-  });
-  response.code(500);
-  return response;
-};
-
-const getExperiencesHandler = () => ({
-  status: "success",
-  data: {
-    experiences,
-  },
-});
-
-const putExperienceByIdHandler = (request, h) => {
-  const { id } = request.params;
-
-  const { period, position, description } = request.payload;
-  const updatedAt = new Date().toISOString();
-
-  const index = experiences.findIndex((experience) => experience.id === id);
-
-  if (index !== -1) {
-    experiences[index] = {
-      ...experiences[index],
-      period,
-      position,
-      description,
-      updatedAt,
     };
-
-    const response = h.response({
-      status: "success",
-      message: "Experience berhasil diperbarui",
-    });
-    response.code(200);
-    return response;
   }
 
-  const response = h.response({
-    status: "fail",
-    message: "Gagal memperbarui experience. Id tidak ditemukan",
-  });
-  response.code(404);
-  return response;
-};
+  putExperienceByIdHandler(request, h) {
+    try {
+      const { id } = request.params;
+      this._service.editExperienceById(id, request.payload);
 
-const deleteExperienceByIdHandler = (request, h) => {
-  const { id } = request.params;
-
-  const index = experiences.findIndex((experience) => experience.id === id);
-
-  if (index !== -1) {
-    experiences.splice(index, 1);
-    const response = h.response({
-      status: "success",
-      message: "Experience berhasil dihapus",
-    });
-    response.code(200);
-    return response;
+      return {
+        status: "success",
+        message: "Experience berhasil diperbarui",
+      };
+    } catch (error) {
+      const response = h.response({
+        status: "fail",
+        message: error.message,
+      });
+      response.code(404);
+      return response;
+    }
   }
 
-  const response = h.response({
-    status: "fail",
-    message: "Experience gagal dihapus. Id tidak ditemukan",
-  });
-  response.code(404);
-  return response;
-};
+  deleteExperienceByIdHandler(request, h) {
+    try {
+      const { id } = request.params;
+      this._service.deleteExperienceById(id);
 
-module.exports = {
-  addExperienceHandler,
-  getAllExperiencesHandler,
-  editExperienceByIdHandler,
-  deleteExperienceByIdHandler,
-};
+      return {
+        status: "success",
+        message: "Experience berhasil dihapus",
+      };
+    } catch (error) {
+      const response = h.response({
+        status: "fail",
+        message: error.message,
+      });
+      response.code(404);
+      return response;
+    }
+  }
+}
+
+module.exports = ExperiencesHandler;
