@@ -2,7 +2,7 @@ const { nanoid } = require("nanoid");
 const { Pool } = require("pg");
 const InvariantError = require("../../exceptions/InvariantError");
 const NotFoundError = require("../../exceptions/NotFoundError");
-const { mapExperienceDBToModel } = require("../../utils");
+const { mapExperiencesDBToModel } = require("../../utils");
 
 class ExperiencesService {
   constructor() {
@@ -30,7 +30,9 @@ class ExperiencesService {
 
   async getExperiences() {
     const result = await this._pool.query("SELECT * FROM experiences");
-    return result.rows.map(mapExperienceDBToModel);
+
+    // map
+    return result.rows.map(mapExperiencesDBToModel);
   }
 
   async editExperienceById(id, { period, position, description }) {

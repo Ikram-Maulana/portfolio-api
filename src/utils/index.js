@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-const mapExperienceDBToModel = ({
+const mapExperiencesDBToModel = ({
   id,
   period,
   position,
@@ -16,4 +16,4 @@ const mapExperienceDBToModel = ({
   updatedAt: updated_at,
 });
 
-module.export = { mapExperienceDBToModel };
+module.exports = { mapExperiencesDBToModel };

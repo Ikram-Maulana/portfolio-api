@@ -2,10 +2,10 @@
 require("dotenv").config();
 
 const Hapi = require("@hapi/hapi");
+const ClientError = require("./exceptions/ClientError");
 
 // Experiences
 const experiences = require("./api/experiences");
-const ClientError = require("./exceptions/ClientError");
 const ExperiencesService = require("./services/postgres/ExperiencesService");
 const ExperiencesValidator = require("./validator/experiences");
 
