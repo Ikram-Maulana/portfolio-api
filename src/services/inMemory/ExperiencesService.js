@@ -1,4 +1,6 @@
 const { nanoid } = require("nanoid");
+const InvariantError = require("../../exceptions/InvariantError");
+const NotFoundError = require("../../exceptions/NotFoundError");
 
 class ExperiencesService {
   constructor() {
@@ -25,7 +27,7 @@ class ExperiencesService {
       this._experiences.filter((experience) => experience.id === id).length > 0;
 
     if (!isSuccess) {
-      throw new Error("Experience gagal ditambahkan");
+      throw new InvariantError("Experience gagal ditambahkan");
     }
 
     return id;
@@ -41,7 +43,9 @@ class ExperiencesService {
     );
 
     if (index === -1) {
-      throw new Error("Gagal memperbarui experience. Id tidak ditemukan");
+      throw new NotFoundError(
+        "Gagal memperbarui experience. Id tidak ditemukan"
+      );
     }
 
     const updatedAt = new Date().toISOString();
@@ -61,7 +65,7 @@ class ExperiencesService {
     );
 
     if (index === -1) {
-      throw new Error("Experience gagal dihapus. Id tidak ditemukan");
+      throw new NotFoundError("Experience gagal dihapus. Id tidak ditemukan");
     }
 
     this._experiences.splice(index, 1);
