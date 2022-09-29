@@ -12,7 +12,7 @@ exports.up = (pgm) => {
       type: "TEXT",
       notNull: true,
     },
-    image: {
+    image_link: {
       type: "TEXT",
       notNull: true,
     },
