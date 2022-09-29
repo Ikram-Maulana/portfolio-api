@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/hapi": "^20.2.2",
+    "@hapi/jwt": "^3.0.0",
     "auto-bind": "4.x.x",
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.2",
