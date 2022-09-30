@@ -10,7 +10,7 @@ class ProjectsService {
     this._pool = new Pool();
   }
 
-  async addProject({ name, image_link, tech, github_link, demo_link }) {
+  async addProject({ name, image_link, description, github_link, demo_link }) {
     const id = nanoid(16);
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
@@ -21,7 +21,7 @@ class ProjectsService {
         id,
         name,
         image_link,
-        tech,
+        description,
         github_link,
         demo_link,
         createdAt,
@@ -45,13 +45,13 @@ class ProjectsService {
 
   async editProjectById(
     id,
-    { name, image_link, tech, github_link, demo_link }
+    { name, image_link, description, github_link, demo_link }
   ) {
     const updatedAt = new Date().toISOString();
 
     const query = {
-      text: "UPDATE projects SET name = $1, image_link = $2, tech = $3, github_link = $4, demo_link = $5, updated_at = $6 WHERE id = $7 RETURNING id",
-      values: [name, image_link, tech, github_link, demo_link, updatedAt, id],
+      text: "UPDATE projects SET name = $1, image_link = $2, description = $3, github_link = $4, demo_link = $5, updated_at = $6 WHERE id = $7 RETURNING id",
+      values: [name, image_link, description, github_link, demo_link, updatedAt, id],
     };
 
     const result = await this._pool.query(query);
