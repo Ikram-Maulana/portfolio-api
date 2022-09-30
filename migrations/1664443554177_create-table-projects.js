@@ -16,8 +16,8 @@ exports.up = (pgm) => {
       type: "TEXT",
       notNull: true,
     },
-    tech: {
-      type: "TEXT[]",
+    description: {
+      type: "TEXT",
       notNull: true,
     },
     github_link: {

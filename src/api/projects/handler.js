@@ -11,12 +11,12 @@ class ProjectsHandler {
 
   async postProjectHandler(request, h) {
     this._validator.validateProjectPayload(request.payload);
-    const { name, image_link, tech, github_link, demo_link } = request.payload;
+    const { name, image_link, description, github_link, demo_link } = request.payload;
 
     const projectId = await this._service.addProject({
       name,
       image_link,
-      tech,
+      description,
       github_link,
       demo_link,
     });
