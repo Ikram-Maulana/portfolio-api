@@ -15,6 +15,11 @@ const projects = require("./api/projects");
 const ProjectsService = require("./services/postgres/ProjectsService");
 const ProjectsValidator = require("./validator/projects");
 
+// Profile
+const profile = require("./api/profile");
+const ProfileService = require("./services/postgres/ProfileService");
+const ProfileValidator = require("./validator/profile");
+
 // authentications
 const authentications = require("./api/authentications");
 const AuthenticationsService = require("./services/postgres/AuthenticationsService");
@@ -26,6 +31,7 @@ const init = async () => {
   const experiencesService = new ExperiencesService();
   const projectsService = new ProjectsService();
   const usersService = new UsersService();
+  const profileService = new ProfileService();
   const authenticationsService = new AuthenticationsService();
 
   const server = Hapi.server({
@@ -83,6 +89,13 @@ const init = async () => {
       options: {
         projectsService,
         validator: ProjectsValidator,
+      },
+    },
+    {
+      plugin: profile,
+      options: {
+        profileService,
+        validator: ProfileValidator,
       },
     },
     {

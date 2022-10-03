@@ -23,7 +23,7 @@ class ProjectsHandler {
 
     const response = h.response({
       status: "success",
-      message: "Experience berhasil ditambahkan",
+      message: "Project berhasil ditambahkan",
       data: {
         projectId,
       },

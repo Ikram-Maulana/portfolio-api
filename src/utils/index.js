@@ -36,4 +36,26 @@ const mapProjectsDBToModel = ({
   updatedAt: updated_at,
 });
 
-module.exports = { mapExperiencesDBToModel, mapProjectsDBToModel };
+const mapProfileDBToModel = ({
+  id,
+  name,
+  image_url,
+  interest,
+  weapon,
+  created_at,
+  updated_at,
+}) => ({
+  id,
+  name,
+  imageUrl: image_url,
+  interest,
+  weapon,
+  createdAt: created_at,
+  updatedAt: updated_at,
+});
+
+module.exports = {
+  mapExperiencesDBToModel,
+  mapProjectsDBToModel,
+  mapProfileDBToModel,
+};
