@@ -16,11 +16,19 @@ exports.up = (pgm) => {
       type: "TEXT",
       notNull: true,
     },
+    description: {
+      type: "TEXT",
+      notNull: true,
+    },
     interest: {
       type: "TEXT[]",
       notNull: true,
     },
     weapon: {
+      type: "TEXT[]",
+      notNull: true,
+    },
+    social_media: {
       type: "TEXT[]",
       notNull: true,
     },

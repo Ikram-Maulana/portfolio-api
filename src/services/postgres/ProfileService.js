@@ -10,14 +10,31 @@ class ProfileService {
     this._pool = new Pool();
   }
 
-  async addProfile({ name, image_url, interest, weapon }) {
+  async addProfile({
+    name,
+    image_url,
+    description,
+    interest,
+    weapon,
+    social_media,
+  }) {
     const id = nanoid(16);
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
 
     const query = {
-      text: "INSERT INTO profile VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id",
-      values: [id, name, image_url, interest, weapon, createdAt, updatedAt],
+      text: "INSERT INTO profile VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id",
+      values: [
+        id,
+        name,
+        image_url,
+        description,
+        interest,
+        weapon,
+        social_media,
+        createdAt,
+        updatedAt,
+      ],
     };
 
     const result = await this._pool.query(query);
@@ -34,12 +51,24 @@ class ProfileService {
     return result.rows.map(mapProfileDBToModel);
   }
 
-  async editProfileById(id, { name, image_url, interest, weapon }) {
+  async editProfileById(
+    id,
+    { name, image_url, description, interest, weapon, social_media }
+  ) {
     const updatedAt = new Date().toISOString();
 
     const query = {
-      text: "UPDATE profile SET name = $1, image_url = $2, interest = $3, weapon = $4, updated_at = $5 WHERE id = $6 RETURNING id",
-      values: [name, image_url, interest, weapon, updatedAt, id],
+      text: "UPDATE profile SET name = $1, image_url = $2, description = $3, interest = $4, weapon = $5, social_media = $6, updated_at = $7 WHERE id = $8 RETURNING id",
+      values: [
+        name,
+        image_url,
+        description,
+        interest,
+        weapon,
+        social_media,
+        updatedAt,
+        id,
+      ],
     };
 
     const result = await this._pool.query(query);

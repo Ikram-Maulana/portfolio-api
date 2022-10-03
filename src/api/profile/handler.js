@@ -11,13 +11,15 @@ class ProfileHandler {
 
   async postProfileHandler(request, h) {
     this._validator.validateProfilePayload(request.payload);
-    const { name, image_url, interest, weapon } = request.payload;
+    const { name, image_url, description, interest, weapon, social_media } = request.payload;
 
     const profileId = await this._service.addProfile({
       name,
       image_url,
+      description,
       interest,
       weapon,
+      social_media
     });
 
     const response = h.response({
